@@ -6,6 +6,8 @@
  *     `-`^^^^'  than setting up local docker environments.
  */
 
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
 var pajo = require('path').join,
     utils = require(pajo(__dirname, 'lib', 'controllers', 'controller.utils.js'));
     express = require('express'),
@@ -26,8 +28,6 @@ frontend.use(awsMock.request);
 
 dataAPI.all('*', awsMock.getProxyHandler(require('rexo-api-lambda')));
 frontend.all('*', awsMock.getProxyHandler(require('rexo-frontend-lambda')));
-
-utils.log('Current Environment: ', process.env.NODE_ENV.cyan);
 
 dataAPI.listen(1811, function() {
   utils.log('Data'.cyan + ' API listening to port ', '1811'.cyan);
