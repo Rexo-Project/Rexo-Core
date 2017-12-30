@@ -2,6 +2,7 @@ var fs = require('fs'),
     path = require('path'),
     pajo = path.join,
     gulp = require('gulp'),
+    cssPrefixer = require('gulp-autoprefixer')
     sass = require('gulp-sass'),
     spawn = require('child_process').spawn;
 
@@ -27,7 +28,10 @@ gulp.task('scss', function() {
       "utf8");
 
     gulp.src(scssFiles)
-      .pipe(sass())
+      .pipe(sass({
+        outputStyle: 'compressed'
+      }))
+      .pipe(cssPrefixer())
       .pipe(gulp.dest(process.env.CSS_PATH));
 });
 
